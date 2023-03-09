@@ -1,0 +1,13 @@
+.github
+.husky
+.vscode
+
+example
+vite.config*
+
+*.lock
+*.yarml
+/.*
+
+lerna.json
+index.html

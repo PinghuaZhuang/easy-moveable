@@ -1,0 +1,24 @@
+{
+  "name": "@moveable/rotatable",
+  "version": "0.0.1",
+  "license": "MIT",
+  "types": "types.d.ts",
+  "scripts": {
+    "sort": "sort-package-json package.json"
+  },
+  "lint-staged": {
+    "*.{js,jsx,md,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write"
+    ]
+  },
+  "browserslist": "> 0.5%, not dead, not IE 11",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@moveable/rotatable": "workspace:^0.0.1"
+  }
+}
