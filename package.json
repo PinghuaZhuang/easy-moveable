@@ -21,7 +21,11 @@
   },
   "browserslist": "> 0.5%, not dead, not IE 11",
   "dependencies": {
+    "@moveable/draggable": "workspace:^0.0.1",
+    "@moveable/inspect": "workspace:^0.0.1",
+    "@moveable/resizable": "workspace:^0.0.1",
     "@moveable/rotatable": "workspace:^0.0.1",
+    "@moveable/utils": "workspace:^0.0.1",
     "lodash": "^4.17.21",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
