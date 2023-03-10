@@ -20,7 +20,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-/example
 vite.config.ts.js
 *.bak
 lib
