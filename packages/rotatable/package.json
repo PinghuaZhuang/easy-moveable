@@ -2,7 +2,6 @@
   "name": "@moveable/rotatable",
   "version": "0.0.1",
   "license": "MIT",
-  "types": "types.d.ts",
   "scripts": {
     "sort": "sort-package-json package.json"
   },
@@ -15,10 +14,10 @@
     ]
   },
   "browserslist": "> 0.5%, not dead, not IE 11",
-  "publishConfig": {
-    "access": "public"
-  },
   "dependencies": {
     "@moveable/rotatable": "workspace:^0.0.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

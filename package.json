@@ -4,12 +4,12 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "build": "lerna run build --scope @zstark/**",
-    "build:example": "lerna run build:example --scope @zstark/**",
-    "dev": "cross-env VITE_ENV=example vite",
+    "build": "pnpm -r run build",
+    "build:example": "vite build",
+    "dev": "vite",
     "lint": "lint-staged",
     "prepare": "husky install",
-    "sort": "sort-package-json package.json && lerna run sort --scope @zstark/**"
+    "sort": "sort-package-json package.json && pnpm -r run sort"
   },
   "lint-staged": {
     "*.{js,jsx,md,json}": [

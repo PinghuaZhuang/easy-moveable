@@ -1,5 +1,5 @@
 {
-  "name": "@moveable/resizable",
+  "name": "@moveable/utils",
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
@@ -15,9 +15,7 @@
   },
   "browserslist": "> 0.5%, not dead, not IE 11",
   "dependencies": {
-    "@moveable/rotatable": "workspace:^0.0.1",
-    "@types/hammerjs": "^2.0.41",
-    "hammerjs": "^2.0.8"
+    "@moveable/rotatable": "workspace:^0.0.1"
   },
   "publishConfig": {
     "access": "public"
