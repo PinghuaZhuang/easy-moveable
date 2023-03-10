@@ -102,12 +102,7 @@ const directionCursorMap = {
   [Direction.nw]: 'cursor-nwse',
   [Direction.se]: 'cursor-nwse',
 };
-const cursorList = [
-  'cursor-ns',
-  'cursor-nesw',
-  'cursor-ew',
-  'cursor-nwse',
-];
+const cursorList = ['cursor-ns', 'cursor-nesw', 'cursor-ew', 'cursor-nwse'];
 
 /**
  * 设置鼠标样式(拖拽方向)
@@ -120,4 +115,36 @@ export function setCursor(target: HTMLElement, rotate: number) {
   const cursorIndex = (index + Math.floor(rotate / 45)) % 4;
   target.dataset.cursor = cursorList[cursorIndex];
   return cursorIndex;
+}
+
+const CACHELENGTH = 20;
+export function createCache(length?: number) {
+  let keys: string[] = [];
+  let cacheLength = length ?? CACHELENGTH;
+
+  function cache<T>(key: Key, value: T) {
+    if (keys.push(key + ' ') > cacheLength) {
+      // Only keep the most recent entries
+      delete cache[keys.shift()!];
+    }
+    return value == null ? cache[key + ' '] : (cache[key + ' '] = value);
+  }
+  cache.delete = function (key: Key) {
+    delete cache[key + ' '];
+  }
+  return cache;
+}
+
+/**
+ * 设置样式
+ */
+export function setStyle(
+  element: HTMLElement,
+  style: Partial<Record<keyof CSSStyleDeclaration, number | string>>,
+) {
+  let prop: keyof typeof style;
+  for (prop in style) {
+    const value = style[prop]!;
+    element.style[prop] = typeof value === 'string' ? value : `${value}px`;
+  }
 }

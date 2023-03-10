@@ -1,5 +1,1 @@
-class Inspect {
-
-}
-
-export default Inspect;
+export { default } from './core';
