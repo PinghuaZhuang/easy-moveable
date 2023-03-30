@@ -13,6 +13,7 @@ importers:
       '@moveable/resizable': workspace:^0.0.1
       '@moveable/rotatable': workspace:^0.0.1
       '@moveable/utils': workspace:^0.0.1
+      '@types/hammerjs': ^2.0.41
       '@types/lodash': ^4.14.182
       '@types/node': ^18.11.9
       '@types/react': ^18.0.15
@@ -52,6 +53,7 @@ importers:
       '@commitlint/cli': 16.3.0
       '@commitlint/config-conventional': 16.2.4
       '@faker-js/faker': 7.6.0
+      '@types/hammerjs': 2.0.41
       '@types/lodash': 4.14.191
       '@types/node': 18.14.6
       '@types/react': 18.0.28
@@ -783,7 +785,6 @@ packages:
 
   /@types/hammerjs/2.0.41:
     resolution: {integrity: sha512-ewXv/ceBaJprikMcxCmWU1FKyMAQ2X7a9Gtmzw8fcg2kIePI1crERDM818W+XYrxqdBBOdlf2rm137bU+BltCA==}
-    dev: false
 
   /@types/lodash/4.14.191:
     resolution: {integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==}

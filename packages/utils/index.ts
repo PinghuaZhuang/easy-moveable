@@ -7,8 +7,6 @@ import {
   toString,
 } from 'rematrix';
 
-let id = 0;
-
 /**
  * north east south west
  */
@@ -21,40 +19,6 @@ export enum Direction {
   s = 's',
   sw = 'sw',
   w = 'w',
-}
-
-/**
- * 创建包裹用的容器
- */
-export function createWrapper() {
-  const wrapper = document.createElement('div');
-  wrapper.dataset.moveable = String(id++);
-  return wrapper;
-}
-
-/**
- * 包裹目标元素
- */
-export function pack(
-  el: HTMLElement,
-  els?: HTMLElement[],
-  cb?: (wrapper: HTMLElement, el: HTMLElement) => void,
-) {
-  const parentElement = el.parentElement;
-  if (parentElement == null) {
-    throw new Error(`resize element 不在DOM树中`);
-  }
-  if (parentElement.dataset.moveable) {
-    return parentElement;
-  }
-  const wrapper = createWrapper();
-  cb && cb(wrapper, el);
-  wrapper.appendChild(el);
-  els?.forEach((o) => {
-    wrapper.appendChild(o);
-  });
-  parentElement.appendChild(wrapper);
-  return wrapper;
 }
 
 export function to360(rotate: number) {
@@ -78,9 +42,13 @@ export function matrix2Rotate(matrix: number[]) {
   return Math.round(Math.atan2(b, a) * (180 / Math.PI));
 }
 
-export function toMatrix({ x = 0, y = 0, rotate = 0 }) {
+export function toMatrix({ x = 0, y = 0 }, ...transform: string[]) {
   return toString(
-    [rotateZ(rotate), translateX(x), translateY(y)].reduce(multiply),
+    [
+      ...transform.map((o) => fromString(o)),
+      translateX(x),
+      translateY(y),
+    ].reduce(multiply),
   );
 }
 
@@ -117,21 +85,27 @@ export function setCursor(target: HTMLElement, rotate: number) {
   return cursorIndex;
 }
 
+interface Cache<T = unknown> {
+  (key: Key, value: T): T;
+  [P: string]: any;
+  delete: (key: Key) => void;
+}
+
 const CACHELENGTH = 20;
 export function createCache(length?: number) {
   let keys: string[] = [];
   let cacheLength = length ?? CACHELENGTH;
 
-  function cache<T>(key: Key, value: T) {
+  const cache: Cache = function (key, value) {
     if (keys.push(key + ' ') > cacheLength) {
       // Only keep the most recent entries
       delete cache[keys.shift()!];
     }
     return value == null ? cache[key + ' '] : (cache[key + ' '] = value);
-  }
+  };
   cache.delete = function (key: Key) {
     delete cache[key + ' '];
-  }
+  };
   return cache;
 }
 
@@ -147,4 +121,36 @@ export function setStyle(
     const value = style[prop]!;
     element.style[prop] = typeof value === 'string' ? value : `${value}px`;
   }
+}
+
+/**
+ * 保留N为小数
+ */
+export function toFixed(number: number, digit: number = 0) {
+  return +number.toFixed(digit);
+}
+
+/**
+ * 创建控制容器
+ */
+export function createControlBox(target: HTMLElement, id: Key) {
+  if (target.dataset.moveable) {
+    const controlBox = document.querySelector(`.control-box[data-target="${id}"]`);
+    if (controlBox) {
+      // 已经创建过直接返回
+      return controlBox as HTMLElement;
+    }
+  }
+  target.dataset.moveable = String(id);
+  const controlBox = document.createElement('div');
+  controlBox.classList.add('control-box');
+  id && (controlBox.dataset.target = String(id));
+  setStyle(controlBox, {
+    width: getComputedStyle(target).width,
+    height: getComputedStyle(target).height,
+    transform: getComputedStyle(target).transform,
+    left: target.offsetLeft,
+    top: target.offsetTop,
+  });
+  return controlBox;
 }

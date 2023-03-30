@@ -21,7 +21,7 @@
       "@src/*": ["src/*"]
     }
   },
-  "include": ["packages/*", "./types.d.ts", "./*.ts"],
+  "include": ["packages/**/*", "./types.d.ts", "./*.ts"],
   "exclude": [],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

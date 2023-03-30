@@ -1,0 +1,150 @@
+:root {
+  --moveable-color: #1261ff;
+}
+
+div[data-moveable] {
+  position: relative;
+  left: 0;
+  top: 0;
+  width: max-content;
+}
+
+.control-box {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.control-box[data-visible="false"] {
+  display: none;
+}
+
+.n,
+.e,
+.s,
+.w,
+.nw,
+.ne,
+.sw,
+.se {
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 14px;
+  z-index: 1;
+  position: absolute;
+  user-select: none;
+  pointer-events: all;
+}
+
+.n {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 24px;
+}
+
+.e {
+  right: calc(calc(-14px / 2));
+  top: 50%;
+  transform: translateY(-50%);
+  height: 24px;
+}
+
+.s {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(50%);
+  width: 24px;
+}
+
+.w {
+  left: calc(calc(-14px / 2));
+  top: 50%;
+  transform: translateY(-50%);
+  height: 24px;
+  width: 12px;
+}
+
+.nw {
+  left: calc(-14px / 2);
+  top: calc(-14px / 2);
+}
+
+.ne {
+  top: calc(-14px / 2);
+  right: calc(-14px / 2);
+}
+
+.se {
+  bottom: calc(-14px / 2);
+  right: calc(-14px / 2);
+}
+
+.sw {
+  bottom: calc(-14px / 2);
+  left: calc(-14px / 2);
+}
+
+.line {
+  background-color: var(--moveable-color);
+  position: absolute;
+  will-change: transform;
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  pointer-events: all;
+}
+
+.line[data-line-index="0"],
+.line[data-line-index="2"] {
+  width: 100%;
+  height: 2px;
+}
+
+.line[data-line-index="1"],
+.line[data-line-index="3"] {
+  height: 100%;
+  width: 2px;
+}
+
+.line[data-line-index="0"] {
+  left: 0;
+  top: -1px;
+  // transform: translateY(-50%) translate(0px, 0px);
+}
+
+.line[data-line-index="1"] {
+  right: -1px;
+  top: 0;
+  // transform: translateY(-50%) translate(325px, 0px);
+}
+
+.line[data-line-index="2"] {
+  left: 0;
+  bottom: -1px;
+  // transform: translateY(-50%) translate(0px, 0px);
+}
+
+.line[data-line-index="3"] {
+  left: -1px;
+  top: 0;
+  // transform: translateY(-50%) translate(0px, 200px);
+}
+
+[data-cursor="cursor-ns"] {
+  cursor: ns-resize !important;
+}
+
+[data-cursor="cursor-ew"] {
+  cursor: ew-resize !important;
+}
+
+[data-cursor="cursor-nwse"] {
+  cursor: nwse-resize !important;
+}
+
+[data-cursor="cursor-nesw"] {
+  cursor: nesw-resize !important;
+}
