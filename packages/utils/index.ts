@@ -1,6 +1,5 @@
 import {
   fromString,
-  rotateZ,
   translateX,
   translateY,
   multiply,
@@ -21,10 +20,9 @@ export enum Direction {
   w = 'w',
 }
 
-export function to360(rotate: number) {
-  return ((rotate % 360) + 360) % 360;
-}
-
+/**
+ * 角度转弧度
+ */
 export function toRadian(rotate: number) {
   return (rotate / 180) * Math.PI;
 }
@@ -33,15 +31,13 @@ export function toRadian(rotate: number) {
  * matrix中获取旋转角度
  */
 export function matrix2Rotate(matrix: number[]) {
-  const [a, b /* , c, d */] = matrix;
-  // const scale = Math.sqrt(a * a + b * b);
-  // arc sin, convert from radians to degrees, round
-  // const sin = b / scale;
-  // next line works for 30deg but not 130deg (returns 50);
-  // var angle = Math.round(Math.asin(sin) * (180/Math.PI));
+  const [a, b] = matrix;
   return Math.round(Math.atan2(b, a) * (180 / Math.PI));
 }
 
+/**
+ * transfrom平移
+ */
 export function toMatrix({ x = 0, y = 0 }, ...transform: string[]) {
   return toString(
     [
@@ -85,30 +81,6 @@ export function setCursor(target: HTMLElement, rotate: number) {
   return cursorIndex;
 }
 
-interface Cache<T = unknown> {
-  (key: Key, value: T): T;
-  [P: string]: any;
-  delete: (key: Key) => void;
-}
-
-const CACHELENGTH = 20;
-export function createCache(length?: number) {
-  let keys: string[] = [];
-  let cacheLength = length ?? CACHELENGTH;
-
-  const cache: Cache = function (key, value) {
-    if (keys.push(key + ' ') > cacheLength) {
-      // Only keep the most recent entries
-      delete cache[keys.shift()!];
-    }
-    return value == null ? cache[key + ' '] : (cache[key + ' '] = value);
-  };
-  cache.delete = function (key: Key) {
-    delete cache[key + ' '];
-  };
-  return cache;
-}
-
 /**
  * 设置样式
  */
@@ -124,7 +96,7 @@ export function setStyle(
 }
 
 /**
- * 保留N为小数
+ * 保留N位小数
  */
 export function toFixed(number: number, digit: number = 0) {
   return +number.toFixed(digit);
@@ -135,7 +107,9 @@ export function toFixed(number: number, digit: number = 0) {
  */
 export function createControlBox(target: HTMLElement, id: Key) {
   if (target.dataset.moveable) {
-    const controlBox = document.querySelector(`.control-box[data-target="${id}"]`);
+    const controlBox = document.querySelector(
+      `.control-box[data-target="${id}"]`,
+    );
     if (controlBox) {
       // 已经创建过直接返回
       return controlBox as HTMLElement;
