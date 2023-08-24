@@ -1,5 +1,4 @@
 import Manager from '@moveable/utils/Manager';
-import { pack, createWrapper, Direction, toRadian } from '@moveable/utils';
 import { createControlBox, createPoints, createLines } from './core';
 import './index.less';
 
@@ -13,22 +12,22 @@ class Inspect extends Manager {
 
   controlBox!: HTMLElement;
   target!: HTMLElement;
-  points!: HTMLElement[];
-  lines!: HTMLElement[];
   controls!: HTMLElement[];
-  originTransform!: string;
+  lines!: HTMLElement[];
   options!: InspectOption;
+  originTransform!: string;
 
   constructor(target: HTMLElement, options: InspectOption = {}) {
     super();
 
     // 创建边界元素
     this.target = target;
-    this.controlBox = createControlBox(target);
-    this.points = createPoints(this.controlBox);
+    this.controlBox = createControlBox(target, this.id);
+    this.controls = createPoints(this.controlBox);
     this.lines = createLines(this.controlBox);
-    this.controls = [...this.lines, ...this.points];
+    // this.controls = [...this.lines, ...this.points];
     this.options = Object.assign({}, options);
+    this.originTransform = getComputedStyle(target).transform;
     target.dataset.moveable = String(this.id);
   }
 
